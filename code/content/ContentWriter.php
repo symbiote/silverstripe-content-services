@@ -127,7 +127,8 @@ abstract class ContentWriter {
 	 *				be used as the content instead
 	 * @param string $name
 	 *				The name that is used to refer to this piece of content, 
-	 *				if needed
+	 *				if needed. The name can contain directory separators if desired,
+	 *				and if a file exists with the same name, it will be overwritten.
 	 */
 	public abstract function write($content = null, $name = '');
 	

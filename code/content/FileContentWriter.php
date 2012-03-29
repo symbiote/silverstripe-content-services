@@ -28,15 +28,16 @@ class FileContentWriter extends ContentWriter {
 		}
 	}
 
-	protected function getTarget($name) {
+	protected function getTarget($fullname) {
 		// if we've got an ID, it means we're doing an overwrite, and in that case
 		// the path is encoded in the ID
+		$name = basename($fullname);
 		if (!$this->id) {
 			// otherwise create one based on a hash of the name
-			$idPath = substr(md5(microtime() . $name), 0, 8);
+			$idPath = md5($fullname);
 
-			$first = substr($idPath, 0, 4);
-			$second = substr($idPath, 4, 4);
+			$first = substr($idPath, 0, 16);
+			$second = substr($idPath, 16, 16);
 
 			// set our ID
 			$this->id = "$first/$second/$name";
