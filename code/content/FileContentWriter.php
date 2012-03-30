@@ -14,6 +14,14 @@ class FileContentWriter extends ContentWriter {
 	 * @var string
 	 */
 	public static $base_path = 'content';
+	
+	public function nameToId($fullname) {
+		$name = basename($fullname);
+		$idPath = md5($fullname);
+		$first = substr($idPath, 0, 3);
+		$second = substr($idPath, 3, 29);
+		return "$first/$second/$name";
+	}
 
 	public function write($content = null, $name = '') {
 		$docopy = false;
@@ -31,19 +39,12 @@ class FileContentWriter extends ContentWriter {
 	protected function getTarget($fullname) {
 		// if we've got an ID, it means we're doing an overwrite, and in that case
 		// the path is encoded in the ID
-		$name = basename($fullname);
 		if (!$this->id) {
-			// otherwise create one based on a hash of the name
-			$idPath = md5($fullname);
-
-			$first = substr($idPath, 0, 16);
-			$second = substr($idPath, 16, 16);
-
 			// set our ID
-			$this->id = "$first/$second/$name";
+			$this->id = $this->nameToId($fullname);
 		}
 
-		if (!strlen($name)) {
+		if (!strlen($fullname)) {
 			throw new Exception("Cannot write unnamed file data");
 		}
 

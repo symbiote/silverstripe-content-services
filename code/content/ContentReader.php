@@ -56,6 +56,7 @@ abstract class ContentReader {
 		return $this->getIdentifier() . ContentService::SEPARATOR . $this->id;
 	}
 	
+	
 	/**
 	 * Get a url to this piece of content
 	 * 

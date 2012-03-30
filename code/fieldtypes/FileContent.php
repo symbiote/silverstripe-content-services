@@ -67,6 +67,10 @@ class FileContent extends DBField {
 	 * field
 	 */
 	public function getReader() {
-		
+		return singleton('ContentService')->getReader($this->getValue());
+	}
+	
+	public function URL() {
+		return $this->getReader()->getURL();
 	}
 }

@@ -16,30 +16,38 @@ class FileContentReader extends ContentReader {
 		return Director::absoluteBaseURL() . $path . '/' . $this->getId();
 	}
 	
+	public function isReadable() {
+		$path = $this->getPath($this->getId());
+		return is_readable($path);
+	}
+	
 	/**
 	 * Read content back to the user
 	 *
 	 * @return string
 	 */
 	public function read() {
-		$base = FileContentWriter::$base_path;
-		$path = '';
+		
 		$id = $this->getId();
-		
-		if ($id{0} == '/') {
-			$path = $id;
-		} else {
-			if ($base{0} == '/') {
-				$path = $base . '/' . $this->getId();
-			} else {
-				$path = Director::baseFolder() . '/' . $base . '/' . $this->getId();
-			}
-		}
-		
+		$path = $this->getPath($id);
 		if (!is_readable($path)) {
 			throw new Exception("Expected path $path is not readable");
 		}
 
 		return file_get_contents($path);
+	}
+	
+	protected function getPath($id) {
+		$base = FileContentWriter::$base_path;
+		if ($id{0} == '/') {
+			$path = $id;
+		} else {
+			if ($base{0} == '/') {
+				$path = $base . '/' . $id;
+			} else {
+				$path = Director::baseFolder() . '/' . $base . '/' . $id;
+			}
+		}
+		return $path;
 	}
 }
