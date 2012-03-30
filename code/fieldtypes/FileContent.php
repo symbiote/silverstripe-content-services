@@ -19,6 +19,8 @@ class FileContent extends DBField {
 	public function __construct($name = null, $store=null) {
 		if ($store && class_exists($store.'ContentReader')) {
 			$this->store = $store;
+		} else if ($store) {
+			throw new Exception("$store does not exist; cannot use FileContent field with this type");
 		}
 		parent::__construct($name);
 	}
