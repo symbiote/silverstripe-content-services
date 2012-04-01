@@ -61,7 +61,8 @@ class ContentDeliveryService {
 		// otherwise, lets get a content writer
 		$writer = $this->contentService->getWriter($this->storeIn);
 		$writer->write($file, $relativeName);
-		if ($clear) {
+
+		if ($clear && strpos($file, '.cdn') > 0) {
 			@unlink($file);
 		}
 
@@ -101,7 +102,7 @@ class ContentDeliveryService {
 				$processed[$segment] = $replacement;
 			}
 		}
-		
+
 		if (count($processed)) {
 			// we need to upload a temp version of the file
 			$file = $file . '.cdn';
