@@ -119,6 +119,25 @@ class ContentService {
 			return new $cls($id);
 		}
 	}
+	
+	/**
+	 * Gets a content reader for the given store type over the asset given in 
+	 * assetName. This is used for finding if an asset is stored remotely or 
+	 * not
+	 * 
+	 * Returns NULL if that asset doesn't exist. 
+	 *
+	 * @param string $storeType
+	 * @param string $assetName 
+	 * 
+	 * @return ContentReader
+	 */
+	public function findReaderFor($storeType, $assetName) {
+		$writer = $this->getWriter($storeType);
+		$contentId = $storeType . self::SEPARATOR . $writer->nameToId($assetName);
+		$reader = $this->getReader($contentId);
+		return $reader ? ($reader->isReadable() ? $reader : null) : null;
+	}
 
 	/**
 	 * Get a manifest object that can be used for storing

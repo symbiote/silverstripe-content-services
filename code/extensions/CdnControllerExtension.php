@@ -8,31 +8,27 @@
  */
 class CdnControllerExtension extends Extension {
 
-	static $store_type = 'Haylix';
+	static $store_type = 'File';
 
 	public function requireCDN($type, $assetPath) {
 		// return the cdn URL for the given asset
-
 	}
 	
 	public function CDNPath($assetPath) {
-		$writer = $this->getWriter();
-		$storePath = $writer->nameToId($assetPath);
-		
-		$contentId = self::$store_type . ContentService::SEPARATOR . $storePath;
+		if (Director::isLive()) {
+			$reader = singleton('ContentService')->findReaderFor(self::$store_type, $assetPath);
+			if ($reader->isReadable()) {
+				return $reader->getURL();
+			}
 
-		$reader = singleton('ContentService')->getReader($contentId);
-		
-		if ($reader->isReadable()) {
-			return $reader->getURL();
+			// otherwise, we need to write the file
+			$writer->write(Director::baseFolder().'/'.$assetPath, $assetPath);
+
+			return $writer->getReader()->getURL();
 		}
-		
-		// otherwise, we need to write the file
-		$writer->write(Director::baseFolder().'/'.$assetPath, $assetPath);
-		
-		return $writer->getReader()->getURL();
+		return $assetPath;
 	}
-	
+
 	/**
 	 * @return ContentWriter
 	 */
