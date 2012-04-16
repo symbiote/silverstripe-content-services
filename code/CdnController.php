@@ -5,25 +5,31 @@
  * @author marcus@silverstripe.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
-class CdnController extends CMSMain {
+class CdnController extends LeftAndMain {
 	public static $menu_title = 'CDN';
 	public static $url_segment = 'cdn';
 	
 	public function init() {
 		parent::init();
 		
+		Requirements::javascript('content-services/javascript/cdn.js');
 		Requirements::css('content-services/css/cdn.css');
 	}
 	
-	public function ProcessForm() {
+	
+	public function EditForm() {
 		$config = SiteConfig::current_site_config();
 		$themes = $config->getAvailableThemes();
 		$themes = array_merge(array('' => ''), $themes);
 		
-		$fields = new FieldList(
+		$tabs = new TabSet('Root');
+		$tabs->push(new Tab('Main'));
+		
+		$fields = new FieldSet($tabs);
+		$fields->addFieldsToTab('Root.Main', array(
 			new DropdownField('Theme', _t('CDNController.THEME', 'Theme'), $themes, $this->request->requestVar('Theme')),
 			new TextField('Directory', 'Directory to process')
-		);
+		));
 		
 		if ($this->request->requestVar('Files') || $this->request->requestVar('Theme')) {
 			$base = Director::baseFolder() . '/' . THEMES_DIR . '/' . $this->request->requestVar('Theme');
@@ -35,14 +41,14 @@ class CdnController extends CMSMain {
 					$fileList[$file] = $file;
 				}
 				
-				$fields->push(new CheckboxField('Force', 'Force CDN update'));
-				$fields->push(new CheckboxSetField('Files', 'Theme files', $fileList));
+				$fields->addFieldToTab('Root.Main', new CheckboxField('Force', 'Force CDN update'));
+				$fields->addFieldToTab('Root.Main', new CheckboxSetField('Files', 'Theme files', $fileList));
 			}
 		}
 		
-		$actions = new FieldList(new FormAction('process', 'Process'));
+		$actions = new FieldSet(new FormAction('process', 'Process'));
 		
-		$form = new Form($this, 'ProcessForm', $fields, $actions);
+		$form = new Form($this, 'EditForm', $fields, $actions);
 		return $form;
 	}
 	

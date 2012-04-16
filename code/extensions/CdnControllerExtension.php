@@ -17,7 +17,7 @@ class CdnControllerExtension extends Extension {
 	public function CDNPath($assetPath) {
 		if (Director::isLive()) {
 			$reader = singleton('ContentService')->findReaderFor(self::$store_type, $assetPath);
-			if ($reader->isReadable()) {
+			if ($reader && $reader->isReadable()) {
 				return $reader->getURL();
 			}
 

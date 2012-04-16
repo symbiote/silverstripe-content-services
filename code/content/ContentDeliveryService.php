@@ -60,7 +60,12 @@ class ContentDeliveryService {
 
 		// otherwise, lets get a content writer
 		$writer = $this->contentService->getWriter($this->storeIn);
-		$writer->write($file, $relativeName);
+		try {
+			$writer->write($file, $relativeName);
+		} catch (Exception $e) {
+			SS_Log($e);
+		}
+		
 
 		if ($clear && strpos($file, '.cdn') > 0) {
 			@unlink($file);
