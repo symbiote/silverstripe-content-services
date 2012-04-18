@@ -55,7 +55,7 @@ class ContentDeliveryService {
 		$clear = false;
 		if ($processReferences) {
 			$clear = true;
-			$file = $this->processFileReferences($file);
+			$file = $this->processFileReferences($file, $forceUpdate);
 		}
 
 		// otherwise, lets get a content writer
@@ -63,9 +63,8 @@ class ContentDeliveryService {
 		try {
 			$writer->write($file, $relativeName);
 		} catch (Exception $e) {
-			SS_Log($e);
+			SS_Log::log($e);
 		}
-		
 
 		if ($clear && strpos($file, '.cdn') > 0) {
 			@unlink($file);
