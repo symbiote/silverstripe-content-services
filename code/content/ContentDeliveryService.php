@@ -48,7 +48,7 @@ class ContentDeliveryService {
 			// see if the file already exists, if not we do NOT do an update
 			$reader = $this->contentService->findReaderFor($this->storeIn, $relativeName);
 			if ($reader) {
-				return;
+				return $reader->getURL();
 			}
 		}
 
@@ -63,7 +63,7 @@ class ContentDeliveryService {
 		try {
 			$writer->write($file, $relativeName);
 		} catch (Exception $e) {
-			SS_Log::log($e);
+			SS_Log::log($e, SS_Log::WARN);
 		}
 
 		if ($clear && strpos($file, '.cdn') > 0) {

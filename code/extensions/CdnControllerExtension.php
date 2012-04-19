@@ -10,21 +10,48 @@ class CdnControllerExtension extends Extension {
 
 	static $store_type = 'File';
 
-	public function requireCDN($type, $assetPath) {
+	public function requireCDN($assetPath, $uploadMissing = false) {
 		// return the cdn URL for the given asset
+		$type = strpos($assetPath, '.css')  ? 'css' : 'js';
+		switch ($type) {
+			case 'css': 
+				Requirements::css($this->CDNPath($assetPath, $uploadMissing));
+				break;
+			case 'js': 
+				Requirements::javascript($this->CDNPath($assetPath, $uploadMissing));
+				break;
+		}
+		
 	}
 	
-	public function CDNPath($assetPath) {
+	public function CDNPath($assetPath, $uploadMissing = false) {
 		if (Director::isLive()) {
 			$reader = singleton('ContentService')->findReaderFor(self::$store_type, $assetPath);
 			if ($reader && $reader->isReadable()) {
 				return $reader->getURL();
 			}
 
-			// otherwise, we need to write the file
-			$writer->write(Director::baseFolder().'/'.$assetPath, $assetPath);
+			if ($uploadMissing) {
+				if (strpos($assetPath, '.css')) {
+					// if we're a relative path, make absolute
+					$fullPath = $assetPath;
+					if ($assetPath{0} != '/') {
+						$fullPath = Director::baseFolder().'/' . $assetPath;
+					}
+					if (!file_exists($fullPath)) {
+						return $assetPath;
+					}
+					// upload all references too
+					return singleton('ContentDeliveryService')->storeThemeFile($fullPath, false, true);
+				}
 
-			return $writer->getReader()->getURL();
+				// otherwise just upload
+				$writer = $this->getWriter();
+				// otherwise, we need to write the file
+				$writer->write(Director::baseFolder().'/'.$assetPath, $assetPath);
+
+				return $writer->getReader()->getURL();
+			}
 		}
 		return $assetPath;
 	}
