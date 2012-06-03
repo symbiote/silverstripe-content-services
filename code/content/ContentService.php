@@ -138,27 +138,4 @@ class ContentService {
 		$reader = $this->getReader($contentId);
 		return $reader ? ($reader->isReadable() ? $reader : null) : null;
 	}
-
-	/**
-	 * Get a manifest object that can be used for storing
-	 * a list of files used by that theme that should be stored in a 
-	 * CDN of some sort
-	 *
-	 * @param string $themeName 
-	 */
-	public function getThemeAssetsManifest($themeName) {
-		if (file_exists(Director::baseFolder().'/'.$themeName.'/.manifest')) {
-			
-		}
-	}
-
-	/**
-	 * Save the manifest to disk. This will go through each file and make sure
-	 * it exists in the relevant content store
-	 *
-	 * @param ThemeAssetsManifest $manifest 
-	 */
-	public function saveThemeManifest($manifest) {
-		
-	}
 }
