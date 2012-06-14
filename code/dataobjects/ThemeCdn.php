@@ -26,9 +26,16 @@ class ThemeCdn extends DataObject {
 	public static $searchable_fields = array(
 		'Title'
 	);
+	
+	public static $dependencies = array(
+		'contentDelivery'		=> '%$ContentDeliveryService',
+	);
+	
+	public $contentDelivery;
 
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
+		
 		$fields->replaceField('LastSync', new ReadonlyField('LastSync', _t('ThemeCdn.LAST_SYNC', 'Last Sync')));
 		
 		$config = SiteConfig::current_site_config();
@@ -57,7 +64,7 @@ class ThemeCdn extends DataObject {
 	public function sync() {
 		if ($this->Files && count($this->Files)) {
 			foreach ($this->Files->getValues() as $file) {
-				singleton('ContentDeliveryService')->storeThemeFile($file, $this->ForceResync, strpos($file, '.css') > 0);
+				$this->contentDelivery->storeThemeFile($file, $this->ForceResync, strpos($file, '.css') > 0);
 			}
 		}
 

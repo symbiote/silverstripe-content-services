@@ -14,18 +14,16 @@ class ContentDeliveryService {
 	 * @var string
 	 */
 	protected $storeIn = 'File';
-	
+
 	/**
-	 *
 	 * @var ContentService
 	 */
-	protected $contentService;
+	public $contentService;
 	
-	public function __construct() {
-		$svc = singleton('ContentService');
-		/* @var ContentService $svc */
-		$this->contentService = $svc;
-	}
+	
+	public static $dependencies = array(
+		'contentService'		=> '%$ContentService'
+	);
 	
 	public function setStoreIn($v) {
 		$this->storeIn = $v;

@@ -9,6 +9,11 @@
 class CdnControllerExtension extends Extension {
 
 	static $store_type = 'File';
+	
+	public static $dependencies = array(
+		'contentDelivery'		=> '%$ContentDeliveryService',
+		'contentService'		=> '%$ContentService',
+	);
 
 	public function requireCDN($assetPath, $uploadMissing = false) {
 		// return the cdn URL for the given asset
@@ -26,7 +31,7 @@ class CdnControllerExtension extends Extension {
 	
 	public function CDNPath($assetPath, $uploadMissing = false) {
 		if (Director::isLive()) {
-			$reader = singleton('ContentService')->findReaderFor(self::$store_type, $assetPath);
+			$reader = $this->contentService->findReaderFor(self::$store_type, $assetPath);
 			if ($reader && $reader->isReadable()) {
 				return $reader->getURL();
 			}
@@ -42,7 +47,7 @@ class CdnControllerExtension extends Extension {
 						return $assetPath;
 					}
 					// upload all references too
-					return singleton('ContentDeliveryService')->storeThemeFile($fullPath, false, true);
+					return $this->contentDelivery->storeThemeFile($fullPath, false, true);
 				}
 
 				// otherwise just upload
@@ -60,7 +65,7 @@ class CdnControllerExtension extends Extension {
 	 * @return ContentWriter
 	 */
 	protected function getWriter() {
-		$writer = singleton('ContentService')->getWriter(self::$store_type);
+		$writer = $this->contentService->getWriter(self::$store_type);
 		if (!$writer) {
 			throw new Exception("Invalid writer type " . self::$store_type);
 		}
