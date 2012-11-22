@@ -24,7 +24,7 @@ class ContentDeliveryService {
 	public static $dependencies = array(
 		'contentService'		=> '%$ContentService'
 	);
-	
+
 	public function setStoreIn($v) {
 		$this->storeIn = $v;
 	}

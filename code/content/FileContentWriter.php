@@ -26,6 +26,7 @@ class FileContentWriter extends ContentWriter {
 	public function write($content = null, $name = '') {
 		$docopy = false;
 		$reader = $this->getReaderWrapper($content);
+		// this call will set $this->id so subsequent references to this will work
 		$target = $this->getTarget($name);
 		// SS specific
 		Filesystem::makeFolder(dirname($target));
