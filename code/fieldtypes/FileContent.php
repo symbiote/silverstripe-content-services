@@ -29,7 +29,7 @@ class FileContent extends DBField {
 	 * (non-PHPdoc)
 	 * @see core/model/fieldtypes/DBField#hasValue()
 	 */
-	function hasValue() {
+	function hasValue($field, $arguments = null, $cache = true) {
 		return ($this->value || $this->value == '0') || ( !$this->nullifyEmpty && $this->value === '');
 	}
 
