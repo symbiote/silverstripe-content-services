@@ -27,7 +27,7 @@ abstract class ContentWriter {
 	protected $source;
 	
 	public function __construct($id) {
-		if ($id instanceof ContentReader) {
+		if ($id && $id instanceof ContentReader) {
 			$this->reader = $id;
 			$id = $this->reader->getId();
 		}

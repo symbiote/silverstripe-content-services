@@ -13,7 +13,10 @@ class ContentService {
 	protected $defaultStore;
 	
 	protected $stores = array(
-		'File',
+		'File' => array(
+			'ContentReader'		=> 'FileContentReader',
+			'ContentWriter'		=> 'FileContentWriter',
+		)
 	);
 
 	public function __construct($defaultStore = 'File') {
@@ -30,7 +33,7 @@ class ContentService {
 	}
 	
 	/**
-	 * Get the list of store types
+	 * Get the list of configured store types
 	 *
 	 * @return array
 	 */
@@ -114,9 +117,16 @@ class ContentService {
 		if (!$type) {
 			throw new Exception("Invalid content store type $type");
 		}
-		$cls = $type . $readwrite;
-		if (class_exists($cls)) {
-			return new $cls($id);
+		
+		$type = ucfirst($type);
+		if (isset($this->stores[$type])) {
+			$class = $this->stores[$type][$readwrite];
+			return Injector::inst()->create($class, $id);
+		} else {
+			$cls = $type . $readwrite;
+			if (class_exists($cls)) {
+				return new $cls($id);
+			}
 		}
 	}
 	

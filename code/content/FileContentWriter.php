@@ -46,7 +46,7 @@ class FileContentWriter extends ContentWriter {
 		}
 
 		if (!strlen($fullname)) {
-			throw new Exception("Cannot write unnamed file data");
+			throw new Exception("Cannot write unnamed file data. Make sure to call write() with a filename");
 		}
 
 		// SS specific bit here
