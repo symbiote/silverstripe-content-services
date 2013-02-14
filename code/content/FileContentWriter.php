@@ -8,12 +8,14 @@
  */
 class FileContentWriter extends ContentWriter {
 	
+	public static $base_path = 'content';
+	
 	/** 
 	 * Where should file assets be written to initially? 
 	 * 
 	 * @var string
 	 */
-	public static $base_path = 'content';
+	public $basePath = 'content';
 	
 	public function nameToId($fullname) {
 		$name = basename($fullname);
@@ -50,10 +52,10 @@ class FileContentWriter extends ContentWriter {
 		}
 
 		// SS specific bit here
-		if (self::$base_path{0} == '/') {
-			$path = self::$base_path . '/' . $this->id; 
+		if ($this->basePath{0} == '/') {
+			$path = $this->basePath . '/' . $this->id; 
 		} else {
-			$path = Director::baseFolder() . '/' . self::$base_path . '/' . $this->id; 
+			$path = Director::baseFolder() . '/' . $this->basePath . '/' . $this->id; 
 		}
 
 		return $path;

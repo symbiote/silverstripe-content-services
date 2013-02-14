@@ -1,0 +1,10 @@
+
+Injector:
+  FileContentReader:
+    type: prototype
+    properties:
+      basePath: mycontent
+  FileContentWriter:
+    type: prototype
+    properties:
+      basePath: mycontent

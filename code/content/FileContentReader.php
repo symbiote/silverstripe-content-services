@@ -8,8 +8,16 @@
  */
 class FileContentReader extends ContentReader {
 
+	/** 
+	 * Where should file assets be written to initially? 
+	 * 
+	 * @var string
+	 */
+	public $basePath = 'content';
+	
 	public function getURL() {
-		$path = FileContentWriter::$base_path;
+		$path = $this->basePath;
+		
 		if ($path{0} == '/') {
 			$path = str_replace(Director::baseFolder(), '', $path);
 		}
@@ -38,7 +46,7 @@ class FileContentReader extends ContentReader {
 	}
 	
 	protected function getPath($id) {
-		$base = FileContentWriter::$base_path;
+		$base = $this->basePath;
 		if ($id{0} == '/') {
 			$path = $id;
 		} else {

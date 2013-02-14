@@ -22,7 +22,7 @@ class ContentService {
 	public function __construct($defaultStore = 'File') {
 		$this->defaultStore = $defaultStore;
 	}
-	
+
 	/**
 	 * Set the list of stores available
 	 *
