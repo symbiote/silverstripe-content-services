@@ -118,14 +118,13 @@ class ContentService {
 			throw new Exception("Invalid content store type $type");
 		}
 		
-		$type = ucfirst($type);
 		if (isset($this->stores[$type])) {
 			$class = $this->stores[$type][$readwrite];
-			return Injector::inst()->create($class, $id);
+			return Injector::inst()->create($class, $id, $type);
 		} else {
 			$cls = $type . $readwrite;
 			if (class_exists($cls)) {
-				return new $cls($id);
+				return new $cls($id, $type);
 			}
 		}
 	}

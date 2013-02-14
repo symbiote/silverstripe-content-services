@@ -6,18 +6,7 @@
  * @author marcus@silverstripe.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
-abstract class ContentReader {
-	
-	/**
-	 * The ID for the wrapped content item
-	 *
-	 * @var mixed
-	 */
-	protected $id;
-	
-	public function __construct($id) {
-		$this->id = $id;
-	}
+abstract class ContentReader extends ReaderWriterBase {
 
 	/**
 	 * Returns a content writer wrapped around the same raw item 
@@ -32,30 +21,6 @@ abstract class ContentReader {
 	public function isReadable() {
 		return !is_null($this->id);
 	}
-	
-	/**
-	 * Gets the underlying id if this item
-	 *
-	 * @return mixed
-	 */
-	public function getId() {
-		return $this->id;
-	}
-
-	/**
-	 * Return a unique way of identifying this content reader type
-	 */
-	public function getIdentifier() {
-		return str_replace('ContentReader', '', get_class($this));
-	}
-	
-	/**
-	 * Get content identifier 
-	 */
-	public function getContentId() {
-		return $this->getIdentifier() . ContentService::SEPARATOR . $this->id;
-	}
-	
 	
 	/**
 	 * Get a url to this piece of content

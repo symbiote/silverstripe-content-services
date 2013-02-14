@@ -7,9 +7,8 @@
  * @author marcus@silverstripe.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
-abstract class ContentWriter {
+abstract class ContentWriter extends ReaderWriterBase {
 	
-	protected $id;
 	
 	/**
 	 * A possibly set reader object that wraps around the content this writer
@@ -18,7 +17,7 @@ abstract class ContentWriter {
 	 * @var ContentReader
 	 */
 	protected $reader;
-	
+
 	/**
 	 * Where the content this writer will write is coming from
 	 *
@@ -26,21 +25,13 @@ abstract class ContentWriter {
 	 */
 	protected $source;
 	
-	public function __construct($id = null) {
+	public function __construct($id = null, $sourceId = null) {
 		if ($id && $id instanceof ContentReader) {
 			$this->reader = $id;
 			$id = $this->reader->getId();
 		}
+		$this->sourceIdentifier = $sourceId;
 		$this->id = $id;
-	}
-	
-	/**
-	 * Gets the underlying id if this item
-	 *
-	 * @return mixed
-	 */
-	public function getId() {
-		return $this->id;
 	}
 
 	/**
@@ -48,28 +39,6 @@ abstract class ContentWriter {
 	 */
 	public function getReader() {
 		return singleton('ContentService')->getReader($this->getContentId());
-	}
-	
-	/**
-	 * A signature for this content store. For example, filesystem might return
-	 * 
-	 * FILESYSTEM
-	 * 
-	 * This only needs to be unique with respect to other content stores
-	 */
-	public function getIdentifier() {
-		return str_replace('ContentWriter', '', get_class($this));
-	}
-
-	/**
-	 * Get content identifier that can be used to retrieve this content at a 
-	 * later point in timer
-	 */
-	public function getContentId() {
-		if (!$this->id) {
-			throw new Exception("Null content identifier; content must be written before retrieving id");
-		}
-		return $this->getIdentifier() . ContentService::SEPARATOR . $this->id;
 	}
 
 	/**
