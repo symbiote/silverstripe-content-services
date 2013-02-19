@@ -16,7 +16,7 @@ class FileContentWriter extends ContentWriter {
 	 * @var string
 	 */
 	public $basePath = 'content';
-	
+
 	public function nameToId($fullname) {
 		$name = basename($fullname);
 		$idPath = md5($fullname);
@@ -51,13 +51,28 @@ class FileContentWriter extends ContentWriter {
 			throw new Exception("Cannot write unnamed file data. Make sure to call write() with a filename");
 		}
 
+		return $this->getFilesystemName();
+	}
+	
+	protected function getFilesystemName() {
+		if (!$this->id) {
+			throw new Exception("Cannot find filesystem location for null ID");
+		}
+		
 		// SS specific bit here
 		if ($this->basePath{0} == '/') {
 			$path = $this->basePath . '/' . $this->id; 
 		} else {
 			$path = Director::baseFolder() . '/' . $this->basePath . '/' . $this->id; 
 		}
-
 		return $path;
+	}
+
+	public function delete() {
+		$id = $this->getId();
+		if (!$id) {
+			return;
+		}
+		unlink($this->getFilesystemName());
 	}
 }

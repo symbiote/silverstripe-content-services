@@ -117,5 +117,8 @@ abstract class ContentWriter extends ReaderWriterBase {
 	 */
 	public abstract function write($content = null, $name = '');
 	
-	
+	/**
+	 * Delete the item represented by this writer
+	 */
+	public abstract function delete();
 }

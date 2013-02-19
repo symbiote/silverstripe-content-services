@@ -1,7 +1,7 @@
 {
 	"name": "silverstripe/content-services",
 	"description": "An abstraction from reading and writing content directly to the filesystem.",
-	'version': '0.0.1',
+	"version": "0.0.2",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "file", "filesystem"],
 	"license": "BSD-3-Clause",
