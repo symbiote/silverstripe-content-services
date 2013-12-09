@@ -17,6 +17,13 @@ that storage location, eg
 Included is a Filesystem based implementation of ContentReader/Writer pair, 
 which stores content on the filesystem in a content/ directory. 
 
+
+
+
+See https://groups.google.com/forum/?hl=en&fromgroups=#!topic/silverstripe-dev/Z7CmioND5Ow 
+for some further discussion of what's going on.
+
+
 ## Requirements
 
 * SilverStripe 3.0
