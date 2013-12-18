@@ -15,13 +15,30 @@ class FileContentReader extends ContentReader {
 	 */
 	public $basePath = 'content';
 	
+	/**
+	 * The base URL to prefix things with
+	 *
+	 * @var string
+	 */
+	public $baseUrl = null;
+	
 	public function getURL() {
-		$path = $this->basePath;
 		
-		if ($path{0} == '/') {
-			$path = str_replace(Director::baseFolder(), '', $path);
+		return $this->getBaseUrl() . '/' . $path . '/' . $this->getId();
+	}
+	
+	public function getBaseUrl() {
+		// if none configured, use a URL created from the SS base url
+		if (!$this->baseUrl) {
+			$path = $this->basePath;
+		
+			if ($path{0} == '/') {
+				$path = str_replace(Director::baseFolder(), '', $path);
+			}
+			
+			$this->baseUrl = Director::absoluteBaseURL() . $path;
 		}
-		return Director::absoluteBaseURL() . $path . '/' . $this->getId();
+		return rtrim($this->baseUrl, '/');
 	}
 	
 	public function isReadable() {
@@ -58,4 +75,10 @@ class FileContentReader extends ContentReader {
 		}
 		return $path;
 	}
+
+	public function exists() {
+		$path = $this->getPath($this->getId());
+		return file_exists($path);
+	}
+
 }

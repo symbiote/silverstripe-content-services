@@ -21,6 +21,11 @@ abstract class ContentReader extends ReaderWriterBase {
 	public function isReadable() {
 		return !is_null($this->id);
 	}
+
+	/**
+	 * Does the file exist or not?
+	 */
+	abstract public function exists();
 	
 	/**
 	 * Get a url to this piece of content

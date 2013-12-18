@@ -31,4 +31,9 @@ class RawContentReader extends ContentReader {
 	public function getURL() {
 		return '';
 	}
+
+	public function exists() {
+		return true;
+	}
+
 }
