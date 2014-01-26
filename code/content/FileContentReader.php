@@ -24,7 +24,7 @@ class FileContentReader extends ContentReader {
 	
 	public function getURL() {
 		
-		return $this->getBaseUrl() . '/' . $path . '/' . $this->getId();
+		return $this->getBaseUrl() . '/' /*. $path . '/' */ . $this->getId();
 	}
 	
 	public function getBaseUrl() {
