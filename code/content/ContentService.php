@@ -102,8 +102,8 @@ class ContentService {
 	/**
 	 * Handles creation of a reader/writer
 	 *
-	 * @param type $identifier
-	 * @param type $readwrite
+	 * @param string $identifier
+	 * @param string $readwrite
 	 * @return cls 
 	 */
 	protected function createReaderWriter($identifier, $readwrite) {
