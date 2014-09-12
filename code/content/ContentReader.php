@@ -21,6 +21,21 @@ abstract class ContentReader extends ReaderWriterBase {
 	public function isReadable() {
 		return !is_null($this->id);
 	}
+	
+	/**
+	 * Is this listable? If so, the list() method must return an array of ContentReader items
+	 * that are the 'listed' items from this content reader
+	 */
+	public function isListable() {
+		return false;
+	}
+	
+	/**
+	 * List 'child' items of this ContentReader 
+	 */
+	public function getList() {
+		return array();
+	}
 
 	/**
 	 * Does the file exist or not?
@@ -40,5 +55,12 @@ abstract class ContentReader extends ReaderWriterBase {
 	 * @return string
 	 */
 	public abstract function read();
+	
+	/**
+	 * Return metadata about this file
+	 */
+	public function getInfo() {
+		return array();
+	}
 	
 }
