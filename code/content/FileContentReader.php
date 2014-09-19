@@ -46,6 +46,33 @@ class FileContentReader extends ContentReader {
 		return is_readable($path);
 	}
 	
+		/**
+	 * An S3 object is listable if its content type is a directory
+	 * 
+	 * @return boolean
+	 */
+	public function isListable() {
+		$path = $this->getPath($this->getId());
+		
+		return is_dir($path);
+	}
+	
+	public function getList() {
+		$list = array();
+
+		if ($this->isListable()) {
+			$path = $this->getPath($this->getId());
+			$files = glob($path . '/*');
+			foreach ($files as $file) {
+				$contentId = $this->getSourceIdentifier() . ContentService::SEPARATOR  . $file;
+				$reader = singleton('ContentService')->getReader($contentId);
+				$list[] = $reader;
+			}
+		}
+
+		return $list;
+	}
+	
 	/**
 	 * Read content back to the user
 	 *

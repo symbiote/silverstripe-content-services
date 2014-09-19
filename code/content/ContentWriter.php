@@ -74,12 +74,12 @@ abstract class ContentWriter extends ReaderWriterBase {
 			$reader = $content;
 		} else if (is_string($content)) {
 			// assumed to be a file
-			if (!file_exists($content) || !is_readable($content)) {
-				throw new Exception("Trying to write unreadable content from file $content");
+			if (file_exists($content) && is_readable($content)) {
+				// naughty, but it's the exception that proves the rule...
+				$reader = new FileContentReader($content);
+			} else {
+				$reader = new RawContentReader($content);
 			}
-			
-			// naughty, but it's the exception that proves the rule...
-			$reader = new FileContentReader($content);
 		}
 		
 		return $reader;

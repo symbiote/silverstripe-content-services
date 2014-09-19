@@ -8,8 +8,6 @@
  */
 class FileContentWriter extends ContentWriter {
 	
-	public static $base_path = 'content';
-	
 	/** 
 	 * Where should file assets be written to initially? 
 	 * 
@@ -47,10 +45,6 @@ class FileContentWriter extends ContentWriter {
 			$this->id = $this->nameToId($fullname);
 		}
 
-		if (!strlen($fullname)) {
-			throw new Exception("Cannot write unnamed file data. Make sure to call write() with a filename");
-		}
-
 		return $this->getFilesystemName();
 	}
 	
@@ -59,6 +53,9 @@ class FileContentWriter extends ContentWriter {
 			throw new Exception("Cannot find filesystem location for null ID");
 		}
 		
+		if ($this->id{0} == '/') {
+			return $this->id;
+		}
 		// SS specific bit here
 		if ($this->basePath{0} == '/') {
 			$path = $this->basePath . '/' . $this->id; 

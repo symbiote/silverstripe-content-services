@@ -41,7 +41,7 @@ abstract class ReaderWriterBase {
 	 * This only needs to be unique with respect to other content stores
 	 */
 	public function getSourceIdentifier() {
-		return $this->sourceIdentifier ? $this->sourceIdentifier : str_replace('ContentWriter', '', get_class($this));
+		return $this->sourceIdentifier ? $this->sourceIdentifier : str_replace(array('ContentWriter', 'ContentReader'), '', get_class($this));
 	}
 	
 	/**
@@ -51,6 +51,13 @@ abstract class ReaderWriterBase {
 	 */
 	public function getId() {
 		return $this->id;
+	}
+	
+	/**
+	 * Allow external code to focerfully change where we're accessing this content from 
+	 */
+	public function setId($id) {
+		$this->id = $id;
 	}
 
 	/**

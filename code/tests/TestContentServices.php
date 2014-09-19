@@ -11,6 +11,8 @@ class TestContentServices extends SapphireTest {
 	 */
 	protected $contentService;
 	
+	protected $testDir;
+	
 	public function setUp() {
 		parent::setUp();
 		$dir = Director::baseFolder().'/testcontent';
@@ -18,8 +20,39 @@ class TestContentServices extends SapphireTest {
 			Filesystem::removeFolder($dir);
 		}
 
-		FileContentWriter::$base_path = 'testcontent';
 		$this->contentService = new ContentService();
+		
+		// set some injector properties
+		$injector = Injector::inst();
+		
+		$injector->load(array(
+			'TestContentReader' => array(
+				'class'	=> 'FileContentReader',
+				'type' => 'prototype',
+				'properties'	=> array(
+					'basePath'	=> $dir,
+				)
+			),
+			'TestContentWriter' => array(
+				'class'	=> 'FileContentWriter',
+				'type' => 'prototype',
+				'properties'	=> array(
+					'basePath'	=> $dir,
+				)
+			)
+		));
+		
+		$this->contentService->setStores(array(
+			'File' => array(
+				'ContentReader'		=> 'TestContentReader',
+				'ContentWriter'		=> 'TestContentWriter',
+			)
+		));
+
+		$injector->registerService($this->contentService);
+
+		$this->testDir = $dir;
+		
 	}
 
 	public function testContentWriter() {
@@ -32,7 +65,7 @@ class TestContentServices extends SapphireTest {
 			$this->assertTrue(strpos($e->getMessage(), 'Null content identifier') !== false);
 		}
 	}
-	
+
 	/**
 	 *
 	 * @return FileContentWriter 
@@ -76,5 +109,28 @@ class TestContentServices extends SapphireTest {
 		
 		$text = $reader->read();
 		$this->assertEquals('dummy content', $text);
+	}
+	
+	public function testListFolder() {
+		if (file_exists($this->testDir)) {
+			Filesystem::removeFolder($this->testDir);
+		}
+		
+		mkdir($this->testDir);
+		file_put_contents($this->testDir.'/testfile.txt', 'dummy_data');
+		
+		$reader = $this->contentService->getReader('File:||' . $this->testDir);
+		
+		$list = $reader->getList();
+		
+		$this->assertEquals(1, count($list));
+		
+		$file = $list[0];
+		
+		$writer = $file->getWriter();
+		
+		$writer->write('new contents');
+		
+		$this->assertEquals('new contents', file_get_contents($this->testDir.'/testfile.txt'));
 	}
 }
