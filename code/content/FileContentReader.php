@@ -107,5 +107,4 @@ class FileContentReader extends ContentReader {
 		$path = $this->getPath($this->getId());
 		return file_exists($path);
 	}
-
 }

@@ -137,11 +137,16 @@ class ContentService {
 	 * Returns NULL if that asset doesn't exist. 
 	 *
 	 * @param string $storeType
+	 *				The named store we're looking into
 	 * @param string $assetName 
+	 *				The name of the asset to look up
+	 * @param boolean $remapToId
+	 *				Do we let the reader remap the name to how it represents asset paths? Or are 
+	 *				we looking up an already-mapped path name?
 	 * 
 	 * @return ContentReader
 	 */
-	public function findReaderFor($storeType, $assetName) {
+	public function findReaderFor($storeType, $assetName, $remapToId = true) {
 		$writer = $this->getWriter($storeType);
 		$contentId = $storeType . self::SEPARATOR . $writer->nameToId($assetName);
 		$reader = $this->getReader($contentId);

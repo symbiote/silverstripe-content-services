@@ -81,7 +81,7 @@ abstract class ContentWriter extends ReaderWriterBase {
 				$reader = new RawContentReader($content);
 			}
 		}
-		
+
 		return $reader;
 	}
 	

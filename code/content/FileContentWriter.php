@@ -17,7 +17,7 @@ class FileContentWriter extends ContentWriter {
 
 	public function nameToId($fullname) {
 		$name = basename($fullname);
-		$idPath = md5($fullname);
+		$idPath = md5(dirname($fullname));
 		$first = substr($idPath, 0, 3);
 		$second = substr($idPath, 3, 29);
 		return "$first/$second/$name";
