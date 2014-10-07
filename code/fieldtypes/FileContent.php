@@ -10,6 +10,8 @@
  */
 class FileContent extends DBField {
 	protected $store = 'File';
+	
+	protected $changed = false;
 
 	/**
 	 * Construct a string type field with a set of optional parameters
@@ -31,6 +33,21 @@ class FileContent extends DBField {
 	 */
 	function hasValue($field, $arguments = null, $cache = true) {
 		return ($this->value || $this->value == '0') || ( !$this->nullifyEmpty && $this->value === '');
+	}
+	
+	/**
+	 * Set the value on the field.
+	 * Optionally takes the whole record as an argument,
+	 * to pick other values.
+	 *
+	 * @param mixed $value
+	 * @param array $record
+	 */
+	public function setValue($value, $record = null) {
+		if ($value != $this->value) {
+			$this->changed = true;
+		}
+		$this->value = $value;
 	}
 
 	/**
@@ -72,5 +89,9 @@ class FileContent extends DBField {
 	
 	public function URL() {
 		return $this->getReader()->getURL();
+	}
+	
+	public function isChanged() {
+		return $this->changed;
 	}
 }
