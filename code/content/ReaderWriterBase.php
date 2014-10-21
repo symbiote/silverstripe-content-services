@@ -70,4 +70,18 @@ abstract class ReaderWriterBase {
 		}
 		return $this->getSourceIdentifier() . ContentService::SEPARATOR . $this->id;
 	}
+	
+	/**
+	 * Could this reader/writer be the source for the passed in URL? 
+	 * 
+	 * Useful for seeing if a content source is the provider for the given URL 
+	 * 
+	 * Returns a ContentReader if the URL can be resolved to an actual reader directly
+	 * 
+	 * @param string $url
+	 * @return ContentReader
+	 */
+	public function providerOfUrl($url) {
+		return false;
+	}
 }
