@@ -88,7 +88,10 @@ class FileContent extends DBField {
 	}
 	
 	public function URL() {
-		return $this->getReader()->getURL();
+		$reader = $this->getReader();
+		if ($reader) {
+			return $reader->getURL();
+		}
 	}
 	
 	public function isChanged() {
