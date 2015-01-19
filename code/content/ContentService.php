@@ -153,7 +153,7 @@ class ContentService {
 	 */
 	public function findReaderFor($storeType, $assetName, $remapToId = true) {
 		$writer = $this->getWriter($storeType);
-		$contentId = $storeType . self::SEPARATOR . $writer->nameToId($assetName);
+		$contentId = $storeType . self::SEPARATOR . ($remapToId ? $writer->nameToId($assetName) : $assetName);
 		$reader = $this->getReader($contentId);
 		return $reader ? ($reader->isReadable() ? $reader : null) : null;
 	}

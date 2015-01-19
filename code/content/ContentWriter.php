@@ -101,7 +101,9 @@ abstract class ContentWriter extends ReaderWriterBase {
 	 *
 	 * @return string
 	 */
-	public abstract function nameToId($fullname);
+	public function nameToId($name) {
+		return md5($name) . '/' . basename($name);
+	}
 
 	/**
 	 * Write content to storage
