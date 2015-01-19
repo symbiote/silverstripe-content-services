@@ -87,22 +87,24 @@ abstract class ContentWriter extends ReaderWriterBase {
 	
 	
 	/**
-	 * Convert a name to an ID that this content reader would use to refer to
+	 * Convert a name to an ID that a content reader would use to refer to
 	 * that content. 
 	 * 
-	 * Typically this is used when trying to determine whether a particular 
-	 * content store has the asset and the client code only knows the 
+	 * Externally, this is used when trying to determine whether a particular 
+	 * content store has an asset and the client code only knows the 
 	 * userspace name for the content. 
 	 * 
 	 * This is used heavily by the theme assets management to determine
 	 * whether the file needs to be pushed to the CDN or not
 	 *
 	 * @param string $fullname
+	 *
+	 * @return string
 	 */
 	public abstract function nameToId($fullname);
 
 	/**
-	 * Write content to disk
+	 * Write content to storage
 	 *
 	 * @param mixed $content 
 	 *				Either a content reader, file 

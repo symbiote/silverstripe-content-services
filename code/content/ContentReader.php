@@ -10,35 +10,46 @@ abstract class ContentReader extends ReaderWriterBase {
 
 	/**
 	 * Returns a content writer wrapped around the same raw item 
+	 * 
+	 * @return ContentWriter
 	 */
 	public function getWriter() {
 		return singleton('ContentService')->getWriter($this->getContentId());
 	}
 	
 	/**
-	 * Can content be read from here? 
+	 * Can content be read from the item pointed at by the content ID this object wraps around?
+	 * 
+	 * @return boolean
 	 */
 	public function isReadable() {
 		return !is_null($this->id);
 	}
 	
 	/**
-	 * Is this listable? If so, the list() method must return an array of ContentReader items
-	 * that are the 'listed' items from this content reader
+	 * Is this listable? If so, the getList() method must return an array of ContentReader items
+	 * that are the 'listed' items from this content reader. 
+	 * 
+	 * @return boolean
 	 */
 	public function isListable() {
 		return false;
 	}
 	
 	/**
-	 * List 'child' items of this ContentReader 
+	 * Returns a list (array) of 'child' items of this ContentReader. The 
+	 * items contained in the listing are ContentReader items
+	 * 
+	 * @return array
 	 */
 	public function getList() {
 		return array();
 	}
 
 	/**
-	 * Does the file exist or not?
+	 * Does the item exist or not?
+	 * 
+	 * @returns boolean
 	 */
 	abstract public function exists();
 	
@@ -57,7 +68,12 @@ abstract class ContentReader extends ReaderWriterBase {
 	public abstract function read();
 	
 	/**
-	 * Return metadata about this file
+	 * Return metadata about this file, if applicable. 
+	 * 
+	 * For now, this is expected to be implementation dependent, there may
+	 * be a specific wrapper object for this data at a later point. 
+	 * 
+	 * @return array()
 	 */
 	public function getInfo() {
 		return array();

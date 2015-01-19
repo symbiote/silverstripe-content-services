@@ -44,9 +44,14 @@ class ContentService {
 	/**
 	 * Gets a writer for a DataObject
 	 * 
-	 * This is most useful for when a file has not yet been written so doesn't
-	 * have a file identfier yet, and you want to write content for the given
-	 * data object to a particular field
+	 * If the field already has a value, a writer is created matching that 
+	 * identifier. Otherwise, a new writer is created based on either 
+	 * 
+	 * - The $type passed in 
+	 * - whether the $object class specifies a prefered storage type via 
+	 *   getEffectiveContentStore
+	 * - what the `defaultStore` is set to for the content service
+	 * 
 	 *
 	 * @param DataObject $object
 	 *				The object to get a writer for
