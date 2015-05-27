@@ -66,7 +66,7 @@ class ContentService {
 			$val = $object->$field;
 			if (strlen($val)) {
 				$reader = $this->getReader($val);
-				if ($reader->isReadable()) {
+				if ($reader && $reader->isReadable()) {
 					return $reader->getWriter();
 				}
 			}
