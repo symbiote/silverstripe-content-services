@@ -41,6 +41,10 @@ class ContentService {
 		return $this->stores;
 	}
 
+	function getDefaultStore() {
+		return $this->defaultStore;
+	}
+
 	/**
 	 * Gets a writer for a DataObject
 	 * 
@@ -92,7 +96,7 @@ class ContentService {
 	 *				Identifier in the format type://uniqueid
 	 * @return ContentReader
 	 */
-	public function getReader($identifier) {
+	public function getReader($identifier = null) {
 		return $this->createReaderWriter($identifier, 'ContentReader');
 	}
 	
@@ -100,7 +104,7 @@ class ContentService {
 	 * @param string $identifier
 	 * @return ContentWriter
 	 */
-	public function getWriter($identifier) {
+	public function getWriter($identifier = null) {
 		return $this->createReaderWriter($identifier, 'ContentWriter');
 	}
 	
@@ -113,6 +117,9 @@ class ContentService {
 	 */
 	protected function createReaderWriter($identifier, $readwrite) {
 		$id = null;
+		//if we aren't passed an identifier use the defaultStore
+		$identifier = $identifier == null ? $this->defaultStore : $identifier;
+
 		if (strpos($identifier, self::SEPARATOR)) {
 			list($type, $id) = explode(self::SEPARATOR, $identifier);
 		} else {
