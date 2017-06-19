@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/content-services",
+	"name": "symbiote/silverstripe-content-services",
 	"description": "An abstraction from reading and writing content directly to the filesystem.",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "file", "filesystem"],
@@ -12,7 +12,7 @@
 	],
 	"extra": {
 		"branch-alias": {
-			"dev-master": "1.2.x-dev"
+			"dev-master": "2.0.x-dev"
 		}
 	},
 	"require":
