@@ -3,7 +3,7 @@
 /**
  * Base class that manages the identifier stuff for readers and writers
  *
- * @author <marcus@silverstripe.com.au>
+ * @author <marcus@symbiote.com.au>
  * @license BSD License http://www.silverstripe.org/bsd-license
  */
 abstract class ReaderWriterBase {

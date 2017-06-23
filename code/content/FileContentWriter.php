@@ -3,7 +3,7 @@
 /**
  * A content writer that writes data to disk
  *
- * @author marcus@silverstripe.com.au
+ * @author marcus@symbiote.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class FileContentWriter extends ContentWriter {

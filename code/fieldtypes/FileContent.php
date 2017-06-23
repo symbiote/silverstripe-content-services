@@ -5,7 +5,7 @@
  * of content storage processes so that form fields can saved an upload 
  * directly
  *
- * @author marcus@silverstripe.com.au
+ * @author marcus@symbiote.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class FileContent extends DBField {

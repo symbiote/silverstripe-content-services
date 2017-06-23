@@ -3,7 +3,7 @@
 /**
  * A class for reading content from a source
  *
- * @author marcus@silverstripe.com.au
+ * @author marcus@symbiote.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 abstract class ContentReader extends ReaderWriterBase {

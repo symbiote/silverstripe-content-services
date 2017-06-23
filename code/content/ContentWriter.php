@@ -4,7 +4,7 @@
  * A class that can write content out somewhere, and refer to that content by
  * a uri type structure, eg filesystem://1
  *
- * @author marcus@silverstripe.com.au
+ * @author marcus@symbiote.com.au
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 abstract class ContentWriter extends ReaderWriterBase {
