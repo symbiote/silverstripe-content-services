@@ -10,14 +10,17 @@
 		"email": "marcus@symbiote.com.au"
 	}
 	],
+	"require":
+	{
+		"silverstripe/cms": ">=3.1.0",
+		"symbiote/silverstripe-multivaluefield": "~2.0"
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "2.0.x-dev"
 		}
 	},
-	"require":
-	{
-		"silverstripe/cms": ">=3.1.0",
-		"symbiote/silverstripe-multivaluefield": "~2.0"
+	"replace": {
+		"silverstripe/content-services": "self.version"
 	}
 }
