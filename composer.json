@@ -11,6 +11,7 @@
 	}
 	],
 	"extra": {
+		"installer-name": "content-services",
 		"branch-alias": {
 			"dev-master": "1.2.x-dev"
 		}
