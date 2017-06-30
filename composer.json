@@ -16,6 +16,7 @@
 		"symbiote/silverstripe-multivaluefield": "~2.0"
 	},
 	"extra": {
+		"installer-name": "content-services",
 		"branch-alias": {
 			"dev-master": "2.0.x-dev"
 		}
