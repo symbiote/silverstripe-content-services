@@ -13,7 +13,7 @@
 	"require":
 	{
 		"silverstripe/cms": ">=3.1.0",
-		"symbiote/silverstripe-multivaluefield": "~2.0"
+		"symbiote/silverstripe-multivaluefield": "~4.0"
 	},
 	"extra": {
 		"installer-name": "content-services",
