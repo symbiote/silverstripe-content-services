@@ -65,7 +65,8 @@ class FileContent extends DBField {
 	function requireField() {
 		$parts = array(
 			'datatype'=>'varchar',
-			'precision'=> 255,
+			//IE9 upper limit for URL length. AWS S3, Google Cloud and Rackspace limit is 1024 (as of mid-2017)
+			'precision'=> 2083,
 			'character set'=>'utf8',
 			'collate'=>'utf8_general_ci',
 			'arrayValue'=>$this->arrayValue
