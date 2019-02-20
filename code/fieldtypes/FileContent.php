@@ -98,4 +98,9 @@ class FileContent extends DBField {
 	public function isChanged() {
 		return $this->changed;
 	}
+
+	public function scalarValueOnly() {
+		return false;
+	}
+
 }
