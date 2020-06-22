@@ -7,10 +7,10 @@
  * @license BSD License http://silverstripe.org/bsd-license/
  */
 class FileContentWriter extends ContentWriter {
-	
-	/** 
-	 * Where should file assets be written to initially? 
-	 * 
+
+	/**
+	 * Where should file assets be written to initially?
+	 *
 	 * @var string
 	 */
 	public $basePath = 'content';
@@ -47,20 +47,20 @@ class FileContentWriter extends ContentWriter {
 
 		return $this->getFilesystemName();
 	}
-	
+
 	protected function getFilesystemName() {
 		if (!$this->id) {
 			throw new Exception("Cannot find filesystem location for null ID");
 		}
-		
-		if ($this->id{0} == '/') {
+
+		if ($this->id[0] == '/') {
 			return $this->id;
 		}
 		// SS specific bit here
-		if ($this->basePath{0} == '/') {
-			$path = $this->basePath . '/' . $this->id; 
+		if ($this->basePath[0] == '/') {
+			$path = $this->basePath . '/' . $this->id;
 		} else {
-			$path = Director::baseFolder() . '/' . $this->basePath . '/' . $this->id; 
+			$path = Director::baseFolder() . '/' . $this->basePath . '/' . $this->id;
 		}
 		return $path;
 	}
